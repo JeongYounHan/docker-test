@@ -1,0 +1,18 @@
+sudo: required # 관리자 권한 갖기
+
+language: generic # 언어(플랫폼)
+
+services:
+  - docker
+
+before_install: # 스크립트를 실행할 환경
+  - echo "start"
+  - docker build -t hjy/docker_react -f Dockerfile.dev .
+
+script: # 실행할 스크립트
+  - docker run -e CI=true hjy/docker_react npm run test -- --coverage
+
+after_success:
+  - echo "Test Success"
+
+
